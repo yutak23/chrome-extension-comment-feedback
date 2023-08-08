@@ -32,14 +32,14 @@ const cardEl = (options = { rating: 0, improved_comment: '', advice: '' }) => `
 `;
 
 $(function () {
-	let isRegisteredOnblur = false;
+	let registeredOnblurElId = null;
 	let evaluating = false;
 
 	$(document).on('input', function (inputEvent) {
 		const targetEl = inputEvent.target;
 
 		// blurイベントリスナーがない場合
-		if (targetEl.tagName === 'TEXTAREA' && !isRegisteredOnblur) {
+		if (targetEl.tagName === 'TEXTAREA' && inputEvent.target.id !== registeredOnblurElId) {
 			$(targetEl).on('blur', async function (e) {
 				if (evaluating) return;
 
@@ -65,7 +65,7 @@ $(function () {
 
 				evaluating = false;
 			});
-			isRegisteredOnblur = true;
+			registeredOnblurElId = inputEvent.target.id;
 		}
 	});
 });
